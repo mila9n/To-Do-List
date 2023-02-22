@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeContext } from "styled-components";
+import { GlobalStyle } from "./components/styles/GlobalStyle";
+import Header from "./components/Header";
+import Input from "./components/Input";
+import Todos from "./components/Todos";
+import { ThemeProvider } from "styled-components";
 
 function App() {
+  const [mode, setMode] = React.useState("light");
+
+  const theme = {
+    color: {
+      body: mode === "light" ? "#fafafa" : "#181824",
+    },
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeContext.Provider value={{ mode, setMode }}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Header />
+          <Input />
+          <Todos />
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </>
   );
 }
 
